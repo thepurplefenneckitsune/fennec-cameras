@@ -1,0 +1,26 @@
+# Ignore local interactive HTML dashboard
+camera_app_ideas.html
+
+# Ignore images & graphic assets
+*.jpg
+*.jpeg
+*.png
+*.webp
+*.gif
+*.svg
+
+# Ignore environment variables, secrets, keys & credentials
+.env
+.env.*
+*.pem
+*.key
+*.crt
+*.p12
+
+# Ignore OS & IDE temp files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.tmp
