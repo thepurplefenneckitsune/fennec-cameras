@@ -1,0 +1,37 @@
+# CONCEPT CODE - UNTESTED ROADMAP PROTOTYPE
+version: '3.8'
+
+services:
+  # Fennec Cameras - Headless Linux NVR Daemon
+  nvr-daemon:
+    image: fennec/nvr-core:latest
+    container_name: fennec_nvr_daemon
+    restart: unless-stopped
+    network_mode: host
+    devices:
+      - /dev/video0:/dev/video0    # USB Webcam V4L2 Passthrough
+      - /dev/dri:/dev/dri          # Intel QuickSync / VA-API GPU Passthrough
+    volumes:
+      - /tmp/fennec_ring_buffer:/tmp/fennec_ring_buffer
+      - /mnt/nas_storage:/recordings
+    environment:
+      - NVR_PORT=8554
+      - RING_BUFFER_MAX_GB=4
+
+  # Local Edge AI Object Detection Engine (ONNX / YOLOv8)
+  ai-detector:
+    image: fennec/ai-engine:latest
+    container_name: fennec_ai_detector
+    restart: unless-stopped
+    environment:
+      - MODEL_TYPE=yolov8n
+      - USE_CORAL_TPU=false
+
+  # Server Rack Local Web Admin Portal
+  web-portal:
+    image: fennec/web-portal:latest
+    container_name: fennec_web_portal
+    ports:
+      - "8081:8081"               # Conflict-Free Auto-Relocated Web Port
+    environment:
+      - SERVER_PORT=8081

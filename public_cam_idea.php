@@ -1,4 +1,5 @@
 <?php
+// CONCEPT CODE - UNTESTED ROADMAP PROTOTYPE
 // Public Project Blueprint & Concept Roadmap Showcase
 // Linux-First Offline-Resilient NVR & Security Camera System
 header('Content-Type: text/html; charset=utf-8');
