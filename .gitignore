@@ -12,6 +12,9 @@ camera_app_ideas.html
 # Ignore environment variables, secrets, keys & credentials
 .env
 .env.*
+secrets.env
+secrets.txt
+.git-credentials
 *.pem
 *.key
 *.crt
