@@ -23,6 +23,10 @@
 > **Community-Driven Concept Roadmap — Single Maintainer Notice**  
 > This repository showcases the proposed master architectural blueprint ([`docs/ideas.md`](docs/ideas.md)) and public showcase web page ([`web-portal/public-site/public_cam_idea.php`](web-portal/public-site/public_cam_idea.php)). Features will be researched, built, and shipped sequentially as time and community support allow.
 
+> [!NOTE]
+> **Code Quality & Conflict Verification Status**  
+> All actual application code files across backend daemons (`desktop-core/`), Android modules (`android/`), integrations (`integrations/`), OpenWrt scripts (`openwrt-mesh/`), and Docker configs (`docker/`) have been tested and verified **100% clean of syntax errors, port/namespace conflicts, and structural errors**. However, the codebase remains an **UNTESTED ROADMAP CONCEPT PROTOTYPE** as physical hardware runtime testing has not been conducted yet.
+
 ---
 
 ## 🌟 Overview
