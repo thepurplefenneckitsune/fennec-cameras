@@ -27,3 +27,10 @@ Thumbs.db
 .vscode/
 *.swp
 *.tmp
+
+# Ignore Python build & cache files
+__pycache__/
+*.py[cod]
+*$py.class
+*.db
+*.sqlite3
