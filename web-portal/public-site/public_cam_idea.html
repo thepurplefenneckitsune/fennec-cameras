@@ -1,0 +1,677 @@
+<!-- CONCEPT CODE - UNTESTED ROADMAP PROTOTYPE -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Primary SEO Meta Tags Google Loves -->
+  <title>Linux Offline Security Camera Hub & NVR Mesh - Open Source Concept Roadmap</title>
+  <meta name="description" content="100% open-source, privacy-first offline NVR and security camera mesh system. Repurpose old Android phones, laptops, USB webcams, Raspberry Pis, and OpenWrt routers into a zero-cloud, non-subscription home security network with local AI detection.">
+  <meta name="keywords" content="open source NVR, offline security camera, DIY CCTV NVR, Android security camera app, privacy NVR hub, Linux NVR server, OpenWrt camera router mesh, ONVIF RTSP ingestion, local YOLO object detection, zero cloud security camera, F-Droid NVR app, home security mesh, non subscription NVR">
+  <meta name="author" content="Linux Camera Hub Open Source Project">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <link rel="canonical" href="https://thepurplefox.site/public_cam_idea.html" />
+
+  <!-- Favicon & Apple Touch Icon (Sirv CDN Integration) -->
+  <link rel="icon" type="image/jpeg" href="https://thepurplefox.sirv.com/kistune%20cam/purple_kitsune_logo2.jpg?cx=67&cy=74&cw=890&ch=890">
+  <link rel="apple-touch-icon" href="https://thepurplefox.sirv.com/kistune%20cam/purple_kitsune_logo2.jpg?cx=67&cy=74&cw=890&ch=890">
+
+  <!-- Open Graph / Facebook Meta Tags -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://thepurplefox.site/public_cam_idea.html">
+  <meta property="og:title" content="Linux Offline Security Camera Hub & NVR Mesh System">
+  <meta property="og:description" content="Repurposing old Android phones, laptops, USB webcams, Raspberry Pis, and flashed routers into a 100% offline, privacy-first NVR mesh network.">
+  <meta property="og:image" content="https://thepurplefox.sirv.com/kistune%20cam/purple_kitsune_logo2.jpg?cx=67&cy=74&cw=890&ch=890">
+  <meta property="og:site_name" content="Linux Security Camera Hub Project">
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Linux Offline Security Camera Hub & NVR Mesh">
+  <meta name="twitter:description" content="Open-source, cloud-free DIY NVR system for Android phones, laptops, PCs, Pis & OpenWrt routers. Zero subscriptions, zero telemetry.">
+  <meta name="twitter:image" content="https://thepurplefox.sirv.com/kistune%20cam/purple_kitsune_logo2.jpg?cx=67&cy=74&cw=890&ch=890">
+
+  <!-- Schema.org JSON-LD Structured Data for Google Rich Snippets -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "Linux-First Offline Security Camera Hub & NVR Mesh",
+        "operatingSystem": "Linux, Android, OpenWrt, Raspberry Pi OS, macOS, Docker",
+        "applicationCategory": "SecurityApplication",
+        "codeRepository": "https://github.com/thepurplefenneckitsune/fennec-cameras",
+        "offers": {
+          "@type": "Offer",
+          "price": "0.00",
+          "priceCurrency": "USD"
+        },
+        "description": "100% open-source, privacy-first NVR mesh system for repurposing old hardware (smartphones, laptops, USB webcams, SBCs, OpenWrt routers) into a zero-cloud security network.",
+        "license": "https://www.gnu.org/licenses/agpl-3.0.html"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is the Linux-First Offline Security Camera System?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "It is a 100% open-source, privacy-focused NVR and security camera mesh network that repurposes old Android phones, laptops, USB webcams, Raspberry Pis, and flashed Wi-Fi routers into a cloud-free security system."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I repurpose old Android phones and laptops into security cameras?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. The system features native Android node daemons with battery-optimization bypass and V4L2/USB support for Linux laptops and PCs, serving as zero-cost camera nodes."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does this NVR system require monthly subscription fees or cloud internet?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. The system operates 100% offline over local LAN/Wi-Fi mesh networks with zero monthly fees, zero ads, zero mandatory cloud accounts, and zero telemetry."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How does custom OpenWrt router firmware integration work?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Old Wi-Fi routers can be flashed with custom OpenWrt/DD-WRT firmware to host a dedicated hidden camera mesh SSID, prioritize video stream QoS, and establish P2P WireGuard tunnels."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why is the app not published on Google Play or Apple App Store?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "To bypass commercial app store background execution bans, camera permissions restrictions, and 30% revenue cuts. Distribution is exclusive to F-Droid, GitHub Releases, and Patreon."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--border, #374151);
+      border-radius: 4px;
+    }
+    .badge-policy {
+      background: rgba(244, 63, 94, 0.15);
+      color: #fda4af;
+      border: 1px solid rgba(244, 63, 94, 0.3);
+    }
+    .badge-optional {
+      background: rgba(245, 158, 11, 0.15);
+      color: #fde047;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+  </style>
+</head>
+<body class="bg-[#0f172a] text-[#f8fafc] antialiased min-h-screen p-3 sm:p-6 md:p-8 font-sans">
+
+  <div class="max-w-6xl mx-auto space-y-4 sm:space-y-6">
+    
+    <!-- Single-Maintainer / Community Disclaimer Banner -->
+    <div class="bg-amber-950/40 border border-amber-500/40 rounded-xl p-3.5 sm:p-5 flex flex-col sm:flex-row items-start gap-3 sm:gap-3.5 shadow-md">
+      <div class="p-2 rounded-lg bg-amber-500/20 text-amber-400 shrink-0">
+        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+      </div>
+      <div class="space-y-1 min-w-0">
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="px-2 py-0.5 rounded text-[10px] font-extrabold bg-amber-500/20 text-amber-400 border border-amber-500/30 uppercase tracking-wider shrink-0">PROJECT NOTICE</span>
+          <h4 class="text-xs sm:text-sm md:text-base font-bold text-amber-200">Community-Driven Concept Roadmap — Nothing Is Guaranteed</h4>
+        </div>
+        <p class="text-xs md:text-sm text-amber-300/80 leading-relaxed">
+          This page showcases the complete <strong>proposed feature ideas and architectural concepts</strong> for this project. <strong>Nothing listed here is guaranteed</strong>. This is an open-source, community-driven initiative with <strong>a single person managing and developing the entire project</strong>. Features will be researched, built, and shipped sequentially as time, resources, community contributions, and Patreon support allow.
+        </p>
+      </div>
+    </div>
+
+    <!-- Hero Header Banner -->
+    <div class="bg-[#1e293b] border border-[#334155] rounded-2xl p-4 sm:p-6 md:p-8 shadow-xl relative overflow-hidden">
+      <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
+        <div class="space-y-2 min-w-0">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 max-w-full">
+            <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+            <span class="truncate">Public Master Blueprint & Idea Showcase</span>
+          </div>
+          <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight bg-gradient-to-r from-white via-slate-100 to-indigo-300 bg-clip-text text-transparent break-words">
+            Linux-First Offline Security Camera Hub
+          </h1>
+          <p class="text-slate-400 text-xs sm:text-sm md:text-base max-w-2xl leading-relaxed">
+            Repurposing old smartphones, laptops, USB webcams, Raspberry Pis, routers, and server racks into a resilient, privacy-first NVR mesh network.
+          </p>
+          <div class="pt-2">
+            <a href="https://github.com/thepurplefenneckitsune/fennec-cameras" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-200 border border-slate-700 hover:bg-slate-700 hover:text-white hover:border-slate-500 transition shadow-sm">
+              <svg class="w-4 h-4 fill-current text-white shrink-0" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+              <span>GitHub Repository: <strong class="text-indigo-300">thepurplefenneckitsune/fennec-cameras</strong></span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Quick Stats Box (Mobile Responsive Grid) -->
+        <div class="grid grid-cols-3 divide-x divide-[#334155] bg-[#0f172a]/80 p-3 sm:p-5 rounded-2xl border border-[#334155] shrink-0 w-full md:w-auto">
+          <div class="text-center px-1 sm:px-3">
+            <div class="text-2xl sm:text-3xl font-extrabold text-indigo-400">24</div>
+            <div class="text-[10px] sm:text-[11px] text-slate-400 uppercase tracking-wider font-semibold mt-0.5">Modules</div>
+          </div>
+          <div class="text-center px-1 sm:px-3">
+            <div class="text-2xl sm:text-3xl font-extrabold text-emerald-400">100+</div>
+            <div class="text-[10px] sm:text-[11px] text-slate-400 uppercase tracking-wider font-semibold mt-0.5">Ideas</div>
+          </div>
+          <div class="text-center px-1 sm:px-3">
+            <div class="text-2xl sm:text-3xl font-extrabold text-rose-400">1 Solo</div>
+            <div class="text-[10px] sm:text-[11px] text-slate-400 uppercase tracking-wider font-semibold mt-0.5">Maintainer</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search & Category Filters Bar -->
+    <div class="bg-[#1e293b] border border-[#334155] rounded-xl p-3.5 sm:p-4 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 sm:gap-4">
+      <div class="relative w-full md:w-80">
+        <svg class="w-4 h-4 absolute left-3 top-3 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        <input type="text" id="search-input" placeholder="Search proposed feature ideas..." class="w-full pl-9 pr-4 py-2 bg-[#0f172a] border border-[#334155] rounded-lg text-xs sm:text-sm text-slate-100 placeholder-slate-400 focus:outline-none focus:border-indigo-500">
+      </div>
+
+      <div class="flex items-center gap-2 overflow-x-auto whitespace-nowrap touch-pan-x w-full md:w-auto pb-1.5 md:pb-0 text-xs">
+        <span class="text-slate-400 font-medium shrink-0">Filter:</span>
+        <button onclick="filterCategory('all')" id="btn-cat-all" class="px-3 py-1.5 rounded-lg bg-indigo-600 text-white font-semibold transition shrink-0">All (24 Modules)</button>
+        <button onclick="filterCategory('core')" id="btn-cat-core" class="px-3 py-1.5 rounded-lg bg-[#0f172a] text-slate-300 border border-[#334155] hover:text-white transition shrink-0">Core Hardware & Network</button>
+        <button onclick="filterCategory('security')" id="btn-cat-security" class="px-3 py-1.5 rounded-lg bg-[#0f172a] text-slate-300 border border-[#334155] hover:text-white transition shrink-0">Security & Privacy</button>
+      </div>
+    </div>
+
+    <!-- Grid of 24 Roadmap Categories with All Features -->
+    <main id="public-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-6" aria-label="Roadmap Modules">
+      <!-- Rendered via JS -->
+    </main>
+
+    <!-- Semantic SEO FAQ Section for Google Search Snippets & Indexing -->
+    <section class="bg-[#1e293b] border border-[#334155] rounded-xl p-4 sm:p-6 space-y-4" aria-label="Frequently Asked Questions">
+      <div class="border-b border-[#334155] pb-3">
+        <h2 class="text-base sm:text-lg font-bold text-slate-100 flex items-center gap-2">
+          <svg class="w-5 h-5 text-indigo-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <span>Frequently Asked Questions & Project Overview</span>
+        </h2>
+        <p class="text-slate-400 text-xs mt-0.5">Key information about our privacy-first, 100% offline security camera mesh architecture.</p>
+      </div>
+
+      <div class="space-y-3 text-xs sm:text-sm">
+        <details class="group bg-[#0f172a]/60 border border-[#334155]/80 rounded-lg p-3 cursor-pointer">
+          <summary class="font-semibold text-slate-200 group-hover:text-indigo-300 transition flex items-center justify-between">
+            <span>What is the Linux-First Offline Security Camera Hub?</span>
+            <span class="text-indigo-400 font-bold group-open:rotate-180 transition-transform">↓</span>
+          </summary>
+          <p class="mt-2 text-slate-300 leading-relaxed text-xs">
+            It is a 100% open-source (AGPLv3/MIT), privacy-focused Network Video Recorder (NVR) and camera mesh system. It is engineered to turn old hardware—such as Android smartphones, Linux laptops, USB webcams, Raspberry Pis, 1U/2U server racks, and flashed Wi-Fi routers—into a unified, zero-cloud security monitoring network.
+          </p>
+        </details>
+
+        <details class="group bg-[#0f172a]/60 border border-[#334155]/80 rounded-lg p-3 cursor-pointer">
+          <summary class="font-semibold text-slate-200 group-hover:text-indigo-300 transition flex items-center justify-between">
+            <span>How does repurposing old phones and laptops save money?</span>
+            <span class="text-indigo-400 font-bold group-open:rotate-180 transition-transform">↓</span>
+          </summary>
+          <p class="mt-2 text-slate-300 leading-relaxed text-xs">
+            Instead of buying expensive proprietary IP cameras with forced cloud subscriptions, our native Android daemons and Linux V4L2 drivers transform drawer phones and old laptops into high-definition camera nodes. Laptops can also act as Ethernet DHCP gateways and NVR hubs, completely eliminating subscription costs.
+          </p>
+        </details>
+
+        <details class="group bg-[#0f172a]/60 border border-[#334155]/80 rounded-lg p-3 cursor-pointer">
+          <summary class="font-semibold text-slate-200 group-hover:text-indigo-300 transition flex items-center justify-between">
+            <span>Does this system require an internet connection or cloud servers?</span>
+            <span class="text-indigo-400 font-bold group-open:rotate-180 transition-transform">↓</span>
+          </summary>
+          <p class="mt-2 text-slate-300 leading-relaxed text-xs">
+            No. The core system operates 100% offline over local Wi-Fi and Ethernet networks. Video streams, AI object detection (YOLOv8/ONNX), clip indexing, and motion triggers run locally on your hardware. There are zero cloud account requirements, zero telemetry, and zero mandatory external connections.
+          </p>
+        </details>
+
+        <details class="group bg-[#0f172a]/60 border border-[#334155]/80 rounded-lg p-3 cursor-pointer">
+          <summary class="font-semibold text-slate-200 group-hover:text-indigo-300 transition flex items-center justify-between">
+            <span>What role do custom flashed OpenWrt routers play?</span>
+            <span class="text-indigo-400 font-bold group-open:rotate-180 transition-transform">↓</span>
+          </summary>
+          <p class="mt-2 text-slate-300 leading-relaxed text-xs">
+            Older routers flashed with OpenWrt or DD-WRT firmware become dedicated system network nodes. They host a hidden encrypted SSID specifically for camera traffic, prioritize camera QoS to prevent stream stuttering, and establish automated P2P WireGuard mesh tunnels across the property.
+          </p>
+        </details>
+
+        <details class="group bg-[#0f172a]/60 border border-[#334155]/80 rounded-lg p-3 cursor-pointer">
+          <summary class="font-semibold text-slate-200 group-hover:text-indigo-300 transition flex items-center justify-between">
+            <span>Why is the application distributed outside Google Play & Apple App Store?</span>
+            <span class="text-indigo-400 font-bold group-open:rotate-180 transition-transform">↓</span>
+          </summary>
+          <p class="mt-2 text-slate-300 leading-relaxed text-xs">
+            Commercial app stores aggressively kill background camera services, restrict persistent battery-saver bypasses, and take 30% revenue cuts. By distributing exclusively via F-Droid, GitHub Releases, and Patreon, our software maintains 24/7 background execution rights and full device control.
+          </p>
+        </details>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#1e293b] border border-[#334155] rounded-xl p-4 sm:p-6 text-center text-xs text-slate-400 space-y-1 sm:space-y-2">
+      <p class="font-semibold text-slate-300">Linux-First Offline-Resilient Security Camera NVR System</p>
+      <p>Community-Driven Open Source Project • Single-Maintainer Roadmap • Distributed via F-Droid, GitHub & Patreon</p>
+      <p class="pt-1"><a href="https://github.com/thepurplefenneckitsune/fennec-cameras" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:text-indigo-300 hover:underline font-medium inline-flex items-center gap-1.5"><svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg> Official GitHub Repository: github.com/thepurplefenneckitsune/fennec-cameras</a></p>
+    </footer>
+
+  </div>
+
+  <script>
+    const PUBLIC_MODULES = [
+      {
+        num: 1,
+        group: "core",
+        title: "Universal Camera Protocols, Dual-Lens & 360° Capture",
+        desc: "Multi-device feed ingestion and dual-lens panoramic capture.",
+        ideas: [
+          "Headless Linux Core (Lightweight daemon for PCs, laptops, server racks)",
+          "V4L2 USB Webcam capture (/dev/video* for old 720p/1080p cameras)",
+          "Android Camera Node client (bypasses aggressive background app sleep)",
+          "PoE & IP Camera Ingestion (Native ONVIF / RTSP support)",
+          "PTZ Controls (Pan, Tilt, Zoom controls for IP/ONVIF cameras)",
+          "VoIP & SIP Camera Doorbell Support (2-way intercom video/audio)",
+          "Flash / Torch Light Control (Remote toggle & auto low-light flash)",
+          "Hardware IR Night Vision Support (Rugged phone IR sensors like Doogee, Ulefone, AGM)",
+          "Dual-Lens Front + Back Camera Capture (Android Multi-Camera API 28+)",
+          "360° Panoramic Mode (Combines front + rear lenses into side-by-side / stitched view)",
+          "WebRTC / go2rtc sub-second low-latency streaming pipeline",
+          "Circular buffer recording with storage deletion quotas"
+        ]
+      },
+      {
+        num: 2,
+        group: "core",
+        title: "One-Scan Setup QR Provisioning & Automated Re-registration",
+        desc: "Zero-touch QR onboarding and automatic network rediscovery.",
+        ideas: [
+          "One-Touch Setup QR Code (Encodes Device IP, Hub IP, Temp Pass, Master Pass, Role, Port & Tokens)",
+          "On-Screen Setup Card Display (UI renders QR code alongside readable credentials: IP, Port, Temp Pass)",
+          "Zero-Typing Node Provisioning (Scan QR code on new phone/laptop to pair & lock mode in one go)",
+          "Automated Network Scan & Re-registration Engine (Background mDNS/BLE/ARP sweeps auto-rebind nodes after IP changes)"
+        ]
+      },
+      {
+        num: 3,
+        group: "core",
+        title: "Bluetooth BLE Hotspot Credential Sync & Failover",
+        desc: "Encrypted BLE hotspot credential sharing for instant mesh failover.",
+        ideas: [
+          "Encrypted BLE Hotspot Credential Sharing (Phone broadcasts hotspot SSID & pass over BLE on Wi-Fi drop)",
+          "Auto-Connect Laptop & Hub (Laptops & Linux hubs automatically receive BLE payload & connect to hotspot)"
+        ]
+      },
+      {
+        num: 4,
+        group: "core",
+        title: "Native Android Permissions & Battery Optimization Bypass",
+        desc: "Preventing OS background process termination.",
+        ideas: [
+          "Automatic Battery Saver Bypass (REQUEST_IGNORE_BATTERY_OPTIMIZATIONS guided setup)",
+          "High-Priority Foreground Service Enforcer (Persistent notification prevents OS kills)",
+          "System Overlay Permission (SYSTEM_ALERT_WINDOW keeps capture active across reboots & lock states)"
+        ]
+      },
+      {
+        num: 5,
+        group: "core",
+        title: "Active SIM Cellular Failover & Laptop Ethernet Auto-Bridge",
+        desc: "Cellular failback and laptop Ethernet routing.",
+        ideas: [
+          "Active SIM Cellular Auto-Failover (Auto-bridges mobile hotspot when Wi-Fi drops)",
+          "Laptop/PC Ethernet Auto-Bridge Gateway (Turns laptop Wi-Fi + Ethernet into auto-configuring DHCP router)",
+          "Direct Hardware Passthrough (Plug PoE switches, IP cameras, or UPS hardware into laptop Ethernet jack)"
+        ]
+      },
+      {
+        num: 6,
+        group: "core",
+        title: "Universal USB Bus Engine & Audio Hijack Bypass",
+        desc: "Cross-platform USB device detection and audio routing.",
+        ideas: [
+          "Cross-Platform USB Protocol (libusb / V4L2 / ALSA detection across PCs, Laptops, Pis, Servers & Android)",
+          "Android Audio Hijack Bypass (Custom USB Host API driver prevents OS audio redirection when USB mic is attached)",
+          "Bi-Directional USB Audio (USB mics for audio recording/AI detection, USB audio out for intercom/sirens)",
+          "External USB Webcams & Storage Drives (Save footage directly to USB drives across Android OTG & Linux)",
+          "Hardware USB Motion Detectors & Serial Triggers (USB PIR sensors on any node)"
+        ]
+      },
+      {
+        num: 7,
+        group: "core",
+        title: "Instant Boot-Time Auto-Start & Headless Appliance Mode",
+        desc: "Unattended appliance boot capability.",
+        ideas: [
+          "Instant Auto-Start on System Boot (BOOT_COMPLETED receiver on Android & systemd daemon on Linux)",
+          "Zero-Touch Appliance Startup (No manual unlock required—starts streaming & Kiosk mode immediately on power)"
+        ]
+      },
+      {
+        num: 8,
+        group: "core",
+        title: "Tiered Storage Architecture, Dedicated Storage Nodes & NAS",
+        desc: "Local quick-time buffer and continuous NAS retention outsourcing.",
+        ideas: [
+          "Tiered Storage Pipeline (On-device flash used ONLY as quick 5-15m rolling ring buffer; auto-outsources to NAS/Storage Nodes)",
+          "Dedicated Storage Node Role (ANY device—laptop with USB HDD/SSD, PC, server, or Pi with RAID—assigned as Storage Node)",
+          "Storage Node Qualification & Auto-Denial Engine (Automatically denies storage roles to low-space [<16GB] or low-endurance devices)",
+          "High-Performance Timeline Scrubbing (Fast UI scrubbing across local ring buffers, storage nodes & NAS archives)",
+          "Direct NAS Storage Integration (TrueNAS, Unraid, OpenMediaVault, Synology via NFS/SMB/iSCSI)",
+          "Home Assistant Native MQTT Auto-Discovery & HACS Component",
+          "External Zigbee / Z-Wave / Wi-Fi Sensor Triggered Recording",
+          "Apple HomeKit & Google Home integration via Scrypted / Homebridge"
+        ]
+      },
+      {
+        num: 9,
+        group: "core",
+        title: "Local Edge AI, Smart Detection & Natural Language Search",
+        desc: "Edge AI processing without sending frames to the cloud.",
+        ideas: [
+          "Local Edge Object Detection (Person, Vehicle, Animal, Package via ONNX / YOLOv8 / Coral TPU)",
+          "Facial Recognition & License Plate (ALPR/ANPR) logging",
+          "Audio AI Pattern Recognition (Glass breaking, baby crying, dog barking, smoke alarms)",
+          "Local Natural Language Video Clip Search ('Show clips of a delivery truck yesterday') via CLIP vector indexing"
+        ]
+      },
+      {
+        num: 10,
+        group: "core",
+        title: "Battery, Thermal Protection & Solar Duty Cycling",
+        desc: "Hardware health protection for 24/7 nodes.",
+        ideas: [
+          "Overheat Throttling & Thermal Protection (Auto-dims screen, drops FPS, pauses heavy AI on hot batteries)",
+          "Solar / Battery Deep Sleep Duty Cycling (Wakes in milliseconds via PIR/BLE to extend battery life off-grid)"
+        ]
+      },
+      {
+        num: 11,
+        group: "core",
+        title: "Mesh Relay & Multi-Hub High Availability Failover",
+        desc: "P2P wireless repeating and Hub redundancy.",
+        ideas: [
+          "P2P Wireless Mesh Relay (Intermediate nodes act as repeaters to hop video streams from out-of-range areas)",
+          "High Availability Multi-Hub Failover (Secondary Linux PC/Pi/phone auto-promotes if main Hub loses power)"
+        ]
+      },
+      {
+        num: 12,
+        group: "security",
+        title: "Active Defense & Two-Way Walkie-Talkie Intercom",
+        desc: "Live full-duplex voice and deterrence alarms.",
+        ideas: [
+          "Two-Way Walkie-Talkie Intercom (Full-duplex live audio between Web Dashboard and camera nodes/SIP doorbells)",
+          "Remote Siren & Strobe Light Deterrence (Trigger loud alarms & flashing strobes on phone nodes)"
+        ]
+      },
+      {
+        num: 13,
+        group: "core",
+        title: "Offline-First, Hybrid Networking & Multi-AP Mesh Roaming",
+        desc: "Zero-internet local network operation and AP roaming.",
+        ideas: [
+          "100% LAN / Offline operational capability (No internet needed)",
+          "Multi-AP Mesh & Cheap Wi-Fi Repeater Support (Seamless AP hopping & 802.11k/v/r fast roaming prevents socket drops)",
+          "Smartphone Wi-Fi Sharing Mesh Points (Harnesses native Wi-Fi Sharing on Samsung/Pixel phones into mesh extenders)",
+          "Linux Hub Access Point mode (hostapd / nmcli offline Wi-Fi hotspot)",
+          "Android Local-Only Hotspot integration (API 26+ bypasses SIM restrictions)",
+          "BLE Beaconing for auto zero-config device discovery & pairing",
+          "Store & Forward: Nodes record 30s clips to SD card when Wi-Fi drops, auto-syncing upon reconnection"
+        ]
+      },
+      {
+        num: 14,
+        group: "security",
+        title: "App-First Architecture & Headless Web Portal",
+        desc: "App-first daily control with headless local Ethernet web administration.",
+        ideas: [
+          "App-First Native Application Paradigm (Native Android APK & desktop apps serve as primary daily interface)",
+          "Seamless Web-to-App Handoff (Once initial Web Dashboard setup is done, full control becomes available in native app)",
+          "Bi-Directional Real-Time Synchronization (Setting edits in app immediately sync back to server web daemon)",
+          "Headless Appliance Local Web Portal (Embedded local web server for headless 1U/2U server racks & Pis)",
+          "Direct Ethernet / Local LAN Administration (Plug Ethernet into headless server or access via http://<ip>:8080)",
+          "Conflict-Free Auto-Port Relocation Protocol (Detects occupied ports like 80/8080/8443 and auto-relocates to 8081 without colliding with Plex/Home Assistant)",
+          "Stable Immutable Service Identity (Hub generates persistent nvr-hub-<uuid>.local identity so port changes never break bookmarks)",
+          "100% Zero-Cloud Privacy Guarantee (Dashboard served 100% locally with ZERO public domain hooks or telemetry)"
+        ]
+      },
+      {
+        num: 15,
+        group: "core",
+        title: "Server Rack & Docker Containerization",
+        desc: "Containerized deployment for home labs.",
+        ideas: [
+          "Docker Compose / Podman single-command setup (docker compose up -d)",
+          "Hardware acceleration passthrough (Intel QuickSync / Nvidia NVENC passthrough)",
+          "Flexible storage backends (Local drives, NFS/SMB NAS mounts, clean quotas)"
+        ]
+      },
+      {
+        num: 16,
+        group: "security",
+        title: "Multi-Tier Passwords, Privacy Mode & Optional Supabase Auth",
+        desc: "Local multi-user RBAC and optional cloud auth.",
+        isOptional: true,
+        ideas: [
+          "Global Master Password (100% local password to authenticate all camera servers)",
+          "Per-Camera Passwords (Custom local override passwords per individual camera node)",
+          "Temporary Guest Access (Auto-expiring guest user/password after X hours or views)",
+          "Family Roles & Local Permissions (Granular camera access per family member)",
+          "Hardware Privacy Mode (One-tap physical power/stream cut to camera sensor)",
+          "[OPTIONAL / LAST PRIORITY] Supabase Cloud Integration (Cloud tables - added ONLY if requested by community)",
+          "[OPTIONAL / LAST PRIORITY] Google OAuth Emergency Login (Emergency cloud sign-in - added ONLY if requested by community)"
+        ]
+      },
+      {
+        num: 17,
+        group: "security",
+        title: "Dedicated Kiosk & Device Tamper Lock Mode",
+        desc: "Tamper prevention for deployed camera nodes.",
+        ideas: [
+          "Dedicated Camera-Only Kiosk Lock Mode (Hard-locks screen to camera view)",
+          "Android Lock Task / Screen Pinning (Prevents exiting app even if phone lock screen is bypassed)",
+          "Admin PIN or security password required to unlock out of Camera Mode",
+          "Linux Edge Kiosk lock (Disables desktop shortcuts like Ctrl+Alt+F1, Alt+Tab)",
+          "Stealth tamper alarm (Alerts Hub if node is disconnected or physically moved)"
+        ]
+      },
+      {
+        num: 18,
+        group: "security",
+        title: "Sustainable FOSS & Crowdfunding Model",
+        desc: "Open-source licensing and Patreon support model.",
+        ideas: [
+          "100% Open-Source AGPLv3/MIT core (Zero ads, zero subscriptions)",
+          "Patreon / GitHub Sponsors community crowdfunding model",
+          "Patron perks (Roadmap voting, early builds, turn-key ISO images)"
+        ]
+      },
+      {
+        num: 19,
+        group: "security",
+        title: "Anti-App-Store & Independent Distribution Policy",
+        desc: "Explicit distribution channels excluding commercial app stores.",
+        isPolicy: true,
+        ideas: [
+          "NON-NEGOTIABLE POLICY DIRECTIVE: Absolutely ZERO publishing to Google Play Store or Apple App Store",
+          "Rationale: Bypasses store background camera bans, battery saver restrictions & 30% store cuts",
+          "Exclusive Distribution Channel 1: F-Droid (Free & Open Source Android App Repository)",
+          "Exclusive Distribution Channel 2: GitHub Releases (Direct signed APK downloads & release tags)",
+          "Exclusive Distribution Channel 3: Patreon & Custom F-Droid Repo (Direct supporter downloads)"
+        ]
+      },
+      {
+        num: 20,
+        group: "core",
+        title: "Official Dedicated Web Portal & Custom Domain Brand",
+        desc: "Standalone project web portal.",
+        ideas: [
+          "Dedicated Custom Domain Web Portal (Full standalone website & brand presence beyond GitHub)",
+          "Interactive Online Preset QR Code Generator (Generate setup QR codes directly on the website)",
+          "Direct APK Downloads & Custom F-Droid Repo Host (Host APK downloads & F-Droid XML index)",
+          "Hardware Matrix & Setup Guides (Interactive device compatibility lookup & home lab docs)"
+        ]
+      },
+      {
+        num: 21,
+        group: "core",
+        title: "Custom OS Distros, Appliance ISOs, Router Firmware & SBC Images",
+        desc: "Turnkey OS images for bare-metal PCs, routers, SBCs, and phones.",
+        ideas: [
+          "Turnkey Bare-Metal Server ISO (Dedicated Debian/Alpine minimal OS for 1U/2U server racks & PCs)",
+          "[COMMUNITY PHASE] Custom OpenWrt / DD-WRT Router Firmware Nodes (Flashes old routers into system network nodes with video QoS)",
+          "Router Hardware Qualification Filter (Requires min 16MB Flash / 64MB RAM for basic; 128MB+ for full WireGuard mesh)",
+          "Dual-SSID Router Architecture (Flashed router hosts main visible Wi-Fi SSID + hidden encrypted camera mesh SSID)",
+          "Proxmox VE LXC & VM Templates (Pre-configured virtualization templates with GPU passthrough)",
+          "SBC Flashed Disk Images (Pre-built .img.xz images for Raspberry Pi 3/4/5, Orange Pi & Rockchip boards)",
+          "Android AOSP / GSI Custom Camera Firmware (Bloatware-free Android system images optimized for 24/7 camera nodes)",
+          "Boot-on-Charge Firmware Patch (Forces phones to auto boot when plugged into USB power even with dead battery)",
+          "Battery Swell Protection (Kernel charge-limiter stopping charge at 50-60% for 24/7 plugged phones & laptops)",
+          "Laptop Appliance Kiosk OS (Converts old laptops into dedicated 24/7 NVR Hub & monitoring kiosks)"
+        ]
+      },
+      {
+        num: 22,
+        group: "core",
+        title: "Multi-WAN Concurrency & NAT Traversal Topology",
+        desc: "Decentralized Multi-WAN topology and native vs fallback P2P split.",
+        ideas: [
+          "Multi-WAN Concurrent Decentralized Topology (EVERY device with internet runs its own WAN connection concurrently; zero primary bottleneck)",
+          "Localized Scope for Budget Devices (Older/budget phones stream strictly their own camera feed to WAN, preventing device overrun)",
+          "Adaptive LAN-to-WAN Protocol Translation (High-capacity nodes bridge legacy local-only RTSP/ONVIF cameras to encrypted WAN feeds)",
+          "Native Direct WireGuard P2P Path (Direct encrypted device-to-device tunnel with zero third-party data relay)",
+          "Fallback TURN Relay Path (STUN/TURN activated strictly as last resort when symmetric NAT blocks direct P2P, clearly flagged with quotas)"
+        ]
+      },
+      {
+        num: 23,
+        group: "core",
+        title: "Zero-Telemetry Local Hardware Profiling & Load-Shedding",
+        desc: "100% offline static hardware database and load-shedding.",
+        ideas: [
+          "100% Offline Static Hardware Database (Static JSON matrix shipped with software; ZERO runtime telemetry or device fingerprinting)",
+          "Local Offline Capability Detection (Devices detect CPU, RAM & network chipset locally via OS APIs without sending data to servers)",
+          "Hardware-Aware Load Shedding (High-spec Core i7 nodes handle proxying & AI; budget Pentium nodes handle single streams to prevent freezing)",
+          "Open-Source Community DB Contributions (Hardware profile updates contributed via GitHub PRs and distributed in signed release updates)"
+        ]
+      },
+      {
+        num: 24,
+        group: "security",
+        title: "Crypto Security Architecture & Key Lifecycle",
+        desc: "Hardware-enforced encryption and complete key lifecycle management.",
+        ideas: [
+          "Hardware-Enforced Key Storage (Android Keystore / Linux TPM 2.0 enclave key isolation)",
+          "Automated Session Key Rotation (Session keys rotate every 60 min / 10 GB data automatically)",
+          "Instant Device Revocation (Broadcast signed revocation lists across mesh to reject stolen/compromised device keys)",
+          "Perfect Forward Secrecy (PFS) (Ephemeral ECDH key exchanges ensure historical recordings stay un-decryptable if key leaks)",
+          "Zero-Cloud Offline Account & Key Recovery (Shamir's Secret Sharing key shards / 24-word BIP-39 seed phrase for offline recovery)"
+        ]
+      }
+    ];
+
+    let currentFilter = 'all';
+    let searchQuery = '';
+
+    function render() {
+      const grid = document.getElementById('public-grid');
+      grid.innerHTML = '';
+
+      const filtered = PUBLIC_MODULES.filter(m => {
+        const matchesFilter = currentFilter === 'all' ? true : m.group === currentFilter;
+        const textContent = (m.title + ' ' + m.desc + ' ' + m.ideas.join(' ')).toLowerCase();
+        const matchesSearch = searchQuery === '' ? true : textContent.includes(searchQuery);
+        return matchesFilter && matchesSearch;
+      });
+
+      filtered.forEach(m => {
+        const card = document.createElement('div');
+        card.className = "bg-[#1e293b] border border-[#334155] rounded-xl p-4 sm:p-6 shadow-sm flex flex-col justify-between space-y-4 hover:border-slate-500 transition break-words min-w-0";
+
+        let badgeHtml = `<span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 shrink-0 self-start sm:self-auto">Module ${m.num}</span>`;
+        if (m.isPolicy) {
+          badgeHtml = `<span class="px-2.5 py-0.5 rounded-full text-[11px] font-extrabold badge-policy uppercase tracking-wider shrink-0 self-start sm:self-auto">Fixed Policy Directive</span>`;
+        } else if (m.isOptional) {
+          badgeHtml = `<span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold badge-optional uppercase tracking-wider shrink-0 self-start sm:self-auto">Optional / Last Phase</span>`;
+        }
+
+        const ideasListHtml = m.ideas.map(idea => `
+          <li class="flex items-start gap-2 text-xs text-slate-300 leading-relaxed">
+            <span class="text-indigo-400 font-bold shrink-0 mt-0.5">•</span>
+            <span class="break-words min-w-0">${escapeHtml(idea)}</span>
+          </li>
+        `).join('');
+
+        card.innerHTML = `
+          <div class="space-y-3 sm:space-y-4 min-w-0">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#334155] pb-3">
+              <h3 class="font-bold text-base sm:text-lg text-slate-100 flex items-start sm:items-center gap-2 min-w-0 leading-snug">
+                <span class="shrink-0 text-indigo-400 font-extrabold">${m.num}.</span>
+                <span class="break-words min-w-0">${escapeHtml(m.title)}</span>
+              </h3>
+              ${badgeHtml}
+            </div>
+            <p class="text-slate-400 text-xs italic break-words">${escapeHtml(m.desc)}</p>
+            <div class="space-y-2 bg-[#0f172a]/60 p-3 sm:p-3.5 rounded-lg border border-[#334155]/60">
+              <div class="text-[11px] font-extrabold text-slate-400 uppercase tracking-wider mb-1">Proposed Concepts & Features:</div>
+              <ul class="space-y-1.5">
+                ${ideasListHtml}
+              </ul>
+            </div>
+          </div>
+        `;
+
+        grid.appendChild(card);
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `<div class="col-span-full p-8 text-center text-slate-400 text-sm italic bg-[#1e293b] rounded-xl border border-[#334155]">No roadmap modules matching "${searchQuery}" found.</div>`;
+      }
+    }
+
+    function filterCategory(cat) {
+      currentFilter = cat;
+      ['all', 'core', 'security'].forEach(c => {
+        const btn = document.getElementById(`btn-cat-${c}`);
+        if (c === cat) {
+          btn.className = "px-3 py-1.5 rounded-lg bg-indigo-600 text-white font-semibold transition";
+        } else {
+          btn.className = "px-3 py-1.5 rounded-lg bg-[#0f172a] text-slate-300 border border-[#334155] hover:text-white transition";
+        }
+      });
+      render();
+    }
+
+    function escapeHtml(str) {
+      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+    }
+
+    document.getElementById('search-input').addEventListener('input', (e) => {
+      searchQuery = e.target.value.toLowerCase().trim();
+      render();
+    });
+
+    window.onload = render;
+  </script>
+</body>
+</html>
