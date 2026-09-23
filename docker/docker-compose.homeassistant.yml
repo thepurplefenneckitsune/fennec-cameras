@@ -1,0 +1,39 @@
+# CONCEPT CODE - UNTESTED ROADMAP PROTOTYPE
+version: '3.8'
+
+# Example Docker Compose Stack for Fennec Cameras + Home Assistant + Mosquitto MQTT
+services:
+
+  # Home Assistant Core (Open Source Home Automation)
+  homeassistant:
+    container_name: homeassistant
+    image: "ghcr.io/home-assistant/home-assistant:stable"
+    volumes:
+      - /etc/homeassistant:/config
+      - /etc/localtime:/etc/localtime:ro
+    restart: unless-stopped
+    network_mode: host
+
+  # Eclipse Mosquitto MQTT Broker (Zero-Cloud Local Messaging)
+  mosquitto:
+    image: eclipse-mosquitto:latest
+    container_name: mosquitto_mqtt
+    restart: unless-stopped
+    ports:
+      - "1883:1883"               # Standard MQTT Port
+      - "9001:9001"               # MQTT WebSockets Port
+    volumes:
+      - /etc/mosquitto:/mosquitto/config
+
+  # Fennec Cameras Linux NVR Core
+  fennec-nvr:
+    image: fennec/nvr-core:latest
+    container_name: fennec_nvr_core
+    restart: unless-stopped
+    network_mode: host
+    devices:
+      - /dev/video0:/dev/video0    # USB Webcam V4L2 Passthrough
+      - /dev/dri:/dev/dri          # GPU Acceleration Passthrough
+    environment:
+      - MQTT_BROKER=127.0.0.1
+      - HA_AUTO_DISCOVERY=true
