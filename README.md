@@ -68,11 +68,14 @@ fennec-cameras/
 
 ---
 
-## 🖥️ Platform Matrix
+## 🖥️ Platform Matrix & Maintainer Test Bench
 
-- **Android Camera Nodes**: Android 8.0+ (API 26+) with battery-saver bypass and multi-camera (front + rear 360°) capture.
-- **Linux NVR Servers**: Ubuntu, Debian, Arch, Alpine, Raspberry Pi OS, TrueNAS/Unraid via Docker.
+- **Android Camera Nodes**: Android 8.0+ (API 26+) with battery-saver bypass and multi-camera (front + rear 360°) capture. Tested on **Samsung S24 FE** and **Moto G 5G (2024)**.
+- **Linux NVR Servers**: Ubuntu, Debian, Arch, Alpine, Raspberry Pi OS, TrueNAS/Unraid via Docker. Tested on **Intel N150** & **Intel Pentium Gold 6500Y** laptops.
+- **Mobile Touch Preview**: Tested on **iPhone XR** and **iPad (6th Gen) Cellular**.
 - **Router Nodes**: OpenWrt 21.02+ / DD-WRT on devices with 16MB+ Flash / 64MB+ RAM.
+
+👉 View full maintainer hardware inventory & device limitations in [**`docs/MAINTAINER_TEST_BENCH.md`**](docs/MAINTAINER_TEST_BENCH.md).
 
 ---
 

@@ -5,12 +5,13 @@ This directory contains system blueprints, technical specifications, and detaile
 ## 📌 Contents
 
 - **[ideas.md](ideas.md)**: Master architectural concept document covering all 24 roadmap categories and 100+ proposed features.
-- **Hardware Matrix**: System compatibility requirements for smartphones, laptops, USB webcams, SBCs, and routers.
-- **Security & Cryptography**: Shamir's secret sharing key recovery, hardware TPM/Keystore isolation, and PFS key rotation specs.
+- **[MAINTAINER_TEST_BENCH.md](MAINTAINER_TEST_BENCH.md)**: Maintainer hardware inventory (Intel N150, Pentium 6500Y, budget Android/iOS devices) and hardware limitations list.
+- **Security & Cryptography**: Hardware TPM/Keystore isolation, session key rotation, and offline secret sharing key recovery.
 
 ```
 docs/
-├── ideas.md               # Complete 24-module feature blueprint
-├── architecture.md        # Monorepo system architecture & protocol flowcharts
-└── hardware-matrix.md     # Device qualification & RAM/CPU minimum specs
+├── ideas.md                    # Complete 24-module feature blueprint
+├── MAINTAINER_TEST_BENCH.md     # Maintainer hardware inventory & limitations
+├── architecture.md             # Monorepo system architecture & protocol flowcharts
+└── hardware-matrix.md          # Device qualification & RAM/CPU minimum specs
 ```
