@@ -1,0 +1,63 @@
+<!-- CONCEPT CODE - UNTESTED ROADMAP PROTOTYPE -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Headless Server NVR Admin Console (Zero-Dependency Static HTML)</title>
+  <!-- CONCEPT CODE - UNTESTED ROADMAP PROTOTYPE -->
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    /* Pure CSS custom styles for zero-dependency rendering */
+    .badge-status { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen p-6 font-sans">
+  
+  <!-- CONCEPT CODE BANNER -->
+  <div class="bg-indigo-950 border border-indigo-500/50 rounded-xl p-4 mb-6 text-center text-xs font-mono font-bold text-indigo-300 uppercase tracking-widest">
+    ⚠️ CONCEPT CODE - UNTESTED ROADMAP PROTOTYPE — ZERO-DEPENDENCY STATIC HTML ADMIN CONSOLE
+  </div>
+
+  <div class="max-w-7xl mx-auto space-y-6">
+    <header class="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-slate-800 pb-4 gap-3">
+      <div>
+        <h1 class="text-2xl font-extrabold text-white flex items-center gap-2">
+          <span>🖥️ Headless Server NVR Console</span>
+        </h1>
+        <p class="text-xs text-slate-400 mt-1">Bound to Local Hub: <span id="hub-ip" class="text-indigo-400 font-bold">127.0.0.1:8081</span> (Zero-PHP Startup)</p>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="px-3 py-1 rounded-full text-xs font-bold badge-status">100% Offline Static HTML</span>
+      </div>
+    </header>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div class="lg:col-span-2 bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-3">
+        <h3 class="font-bold text-sm text-slate-200">Live Multi-Channel Grid & Timeline Scrubbing</h3>
+        <div class="aspect-video bg-black rounded-lg flex flex-col items-center justify-center border border-slate-800 p-4 text-center">
+          <svg class="w-12 h-12 text-slate-600 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 00 2 2z"/></svg>
+          <p class="text-xs text-slate-400">[ Static HTML Preview — WebRTC / MJPEG Stream Canvas ]</p>
+        </div>
+      </div>
+
+      <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-4">
+        <h3 class="font-bold text-sm text-slate-200">Tiered NAS Storage & Storage Node Qualifications</h3>
+        <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 space-y-2 text-xs">
+          <p class="text-slate-300 font-semibold">Local Flash Ring Buffer: <span class="text-indigo-400">5-15 min rolling</span></p>
+          <p class="text-slate-400">NAS Target: TrueNAS / Unraid NFS Mount</p>
+          <p class="text-rose-400 font-medium">Auto-Denial Rule: Drives &lt;16GB rejected</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // CONCEPT CODE - UNTESTED ROADMAP PROTOTYPE
+    // Pure Vanilla JS for local status polling (Zero dependencies, Zero frameworks)
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log('Fennec Headless Admin Console initialized (Static HTML, Zero PHP dependency).');
+    });
+  </script>
+</body>
+</html>
