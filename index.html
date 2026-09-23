@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fennec Cameras - Open Source Linux NVR & Camera Ecosystem</title>
+  <meta name="description" content="100% Offline, Privacy-First, Zero Cloud Subscription NVR & Security Camera System for Linux. Interactive Web Previews and Architecture Roadmap.">
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            kitsune: {
+              pink: '#ff007f',
+              purple: '#8a2be2',
+              darkBg: '#0d0714',
+              cardBg: '#1a102a',
+              border: '#371d5a'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #371d5a; border-radius: 4px; }
+  </style>
+</head>
+<body class="bg-[#0d0714] text-[#f8fafc] font-sans antialiased min-h-screen flex flex-col transition-colors duration-200">
+
+  <!-- Active Development Notification Banner -->
+  <div id="noticeBanner" class="bg-gradient-to-r from-purple-900/90 via-pink-900/90 to-purple-900/90 border-b border-pink-500/40 px-4 py-2.5 text-xs text-pink-100 flex flex-wrap items-center justify-between gap-2 shadow-lg">
+    <div class="flex items-center gap-2">
+      <span class="px-2 py-0.5 rounded text-[10px] font-extrabold bg-pink-500 text-white uppercase tracking-wider animate-pulse">DEVELOPMENT LOG</span>
+      <span class="font-semibold text-pink-200">📢 <strong>Linux Desktop App Display:</strong> Native PySide6/Qt6 NVR application is being made — functional prototype with multi-monitor pop-outs & drag auto-grouping!</span>
+    </div>
+    <div class="flex items-center gap-3">
+      <a href="preview/camera_linux_app_preview.html" class="text-xs text-pink-300 hover:text-white font-bold underline flex items-center gap-1">
+        🖥️ Open App Simulator ↗
+      </a>
+      <button onclick="document.getElementById('noticeBanner').style.display='none'" class="text-pink-300 hover:text-white font-bold">✕</button>
+    </div>
+  </div>
+
+  <!-- Header Navigation -->
+  <header class="bg-[#1a102a] border-b border-[#371d5a] px-4 py-4 sticky top-0 z-50 shadow-xl backdrop-blur bg-opacity-90">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-pink-600 via-purple-600 to-indigo-600 flex items-center justify-center text-white text-xl font-bold shadow-lg shadow-pink-500/20">
+          🦊
+        </div>
+        <div>
+          <h1 class="text-xl font-extrabold text-white tracking-tight flex items-center gap-2">
+            FENNEC CAMERAS
+            <span class="text-[10px] bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 px-2.5 py-0.5 rounded-full font-extrabold">GITHUB PAGES SHOWCASE</span>
+          </h1>
+          <p class="text-xs text-purple-300/80">100% Offline, Privacy-First Linux NVR & Security Camera System</p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-3">
+        <a href="preview/camera_linux_app_preview.html" class="px-4 py-2 rounded-xl text-xs font-extrabold bg-gradient-to-r from-pink-600 to-purple-600 text-white shadow-lg hover:brightness-110 transition flex items-center gap-1.5">
+          🖥️ Linux App Display Simulator
+        </a>
+        <a href="public_cam_idea.html" class="px-4 py-2 rounded-xl text-xs font-bold bg-[#140b22] text-pink-300 border border-[#371d5a] hover:bg-purple-900/40 transition flex items-center gap-1.5">
+          📋 Master Blueprint & Ideas
+        </a>
+        <a href="https://github.com/thepurplefenneckitsune/fennec-cameras" target="_blank" class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-200 border border-slate-700 hover:bg-slate-700 transition flex items-center gap-1.5">
+          ⭐ View GitHub Repo
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Hero Section -->
+  <main class="max-w-7xl mx-auto w-full p-4 md:p-8 flex-1 space-y-8">
+
+    <!-- Active Development Progress Notification Drawer -->
+    <div class="bg-gradient-to-r from-[#1e1035] via-[#281347] to-[#1e1035] border border-pink-500/30 rounded-2xl p-6 shadow-2xl space-y-4">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <div class="space-y-1">
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-0.5 rounded text-[10px] font-extrabold bg-emerald-500 text-black uppercase tracking-wider">ACTIVE DEVELOPMENT LOG</span>
+            <h2 class="text-base font-bold text-white">Linux Desktop NVR Application Progress</h2>
+          </div>
+          <p class="text-xs text-slate-300 leading-relaxed max-w-3xl">
+            Linux Desktop NVR application display is being made! Current build status: <strong>Functional Prototype v0.9.4</strong>. Features PySide6/Qt6 native GUI, multi-monitor pop-out windows with drag-release auto-grouping, 2x2/3x3 dynamic layout switching, auto-tour camera carousel, focus view with PTZ controls, and zero cloud lock-in.
+          </p>
+        </div>
+        <div class="flex flex-col items-end shrink-0 gap-2">
+          <span class="bg-emerald-950 text-emerald-400 border border-emerald-600 px-3 py-1 rounded-xl text-xs font-extrabold">
+            Status: Functional Prototype
+          </span>
+          <a href="preview/camera_linux_app_preview.html" class="text-xs text-pink-400 font-bold hover:underline">
+            Test Interactive Simulator ↗
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature Quick Launch Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <!-- Card 1: Interactive Simulator -->
+      <div class="bg-[#1a102a] border border-[#371d5a] rounded-2xl p-6 flex flex-col justify-between space-y-4 hover:border-pink-500/60 transition shadow-xl group">
+        <div class="space-y-3">
+          <div class="w-12 h-12 rounded-xl bg-pink-600/20 border border-pink-500/40 flex items-center justify-center text-2xl group-hover:scale-110 transition">
+            🖥️
+          </div>
+          <h3 class="text-lg font-bold text-white group-hover:text-pink-300 transition">Linux App Display Preview</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Simulate the native PySide6/Qt6 Linux Desktop workstation interface directly in your browser with dynamic 2x2/3x3 grids, multi-monitor pop-outs, and mouse drag auto-grouping.
+          </p>
+        </div>
+        <a href="preview/camera_linux_app_preview.html" class="w-full text-center py-2.5 rounded-xl bg-pink-600/80 hover:bg-pink-600 text-white font-bold text-xs transition shadow-md">
+          Launch App Simulator ↗
+        </a>
+      </div>
+
+      <!-- Card 2: Master Blueprint -->
+      <div class="bg-[#1a102a] border border-[#371d5a] rounded-2xl p-6 flex flex-col justify-between space-y-4 hover:border-pink-500/60 transition shadow-xl group">
+        <div class="space-y-3">
+          <div class="w-12 h-12 rounded-xl bg-purple-600/20 border border-purple-500/40 flex items-center justify-center text-2xl group-hover:scale-110 transition">
+            📋
+          </div>
+          <h3 class="text-lg font-bold text-white group-hover:text-pink-300 transition">Master Blueprint & Ideas</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Explore the complete Fennec Cameras system design: hardware architecture specs, zero cloud subscription philosophy, OpenWrt Wi-Fi mesh routing, and security protocols.
+          </p>
+        </div>
+        <a href="public_cam_idea.html" class="w-full text-center py-2.5 rounded-xl bg-[#140b22] hover:bg-purple-900/40 text-pink-300 border border-[#371d5a] font-bold text-xs transition">
+          View Master Blueprint ↗
+        </a>
+      </div>
+
+      <!-- Card 3: Desktop Native Code Base -->
+      <div class="bg-[#1a102a] border border-[#371d5a] rounded-2xl p-6 flex flex-col justify-between space-y-4 hover:border-pink-500/60 transition shadow-xl group">
+        <div class="space-y-3">
+          <div class="w-12 h-12 rounded-xl bg-indigo-600/20 border border-indigo-500/40 flex items-center justify-center text-2xl group-hover:scale-110 transition">
+            🐍
+          </div>
+          <h3 class="text-lg font-bold text-white group-hover:text-pink-300 transition">PySide6 Native GUI Code</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Inspect the production-ready Python GUI core (<code class="text-pink-300">desktop-core/ui/app.py</code>) supporting 9 cameras, PTZ controls, dark kitsune theme, and multi-monitor window management.
+          </p>
+        </div>
+        <a href="https://github.com/thepurplefenneckitsune/fennec-cameras/tree/main/desktop-core/ui" target="_blank" class="w-full text-center py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-xs transition">
+          Explore Source Code ↗
+        </a>
+      </div>
+
+    </div>
+
+    <!-- System Highlights Section -->
+    <div class="bg-[#1a102a] border border-[#371d5a] rounded-2xl p-6 shadow-xl space-y-6">
+      <h3 class="text-base font-bold text-white flex items-center gap-2 border-b border-[#371d5a] pb-3">
+        ⚡ Key Architecture Principles
+      </h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs text-slate-300">
+        <div class="space-y-2">
+          <span class="font-bold text-pink-400 text-sm">🔒 100% Offline & Private</span>
+          <p class="leading-relaxed text-slate-400">
+            No mandatory cloud logins, subscription fees, or remote server dependencies. Video feeds stream strictly over local RTSP & V4L2 networks.
+          </p>
+        </div>
+        <div class="space-y-2">
+          <span class="font-bold text-purple-400 text-sm">🖥️ Multi-Monitor Pop-Outs</span>
+          <p class="leading-relaxed text-slate-400">
+            Pop camera feeds into independent floating windows. Drag windows over each other to automatically group them into multi-camera grid windows.
+          </p>
+        </div>
+        <div class="space-y-2">
+          <span class="font-bold text-emerald-400 text-sm">🔋 Low-Power Hardware</span>
+          <p class="leading-relaxed text-slate-400">
+            Optimized for Linux laptops (Intel N150, Pentium Gold 6500Y), OpenWrt routers, and mobile devices without requiring dedicated GPUs.
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-[#140b22] border-t border-[#371d5a] py-6 text-center text-xs text-slate-500 space-y-2">
+    <div>Fennec Cameras Open Source Project • GitHub Pages Showcase</div>
+    <div class="text-[11px] text-slate-600">Licensed under GNU GPL v3 • Dark Kitsune Theme Engine</div>
+  </footer>
+
+</body>
+</html>
