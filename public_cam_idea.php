@@ -1,4 +1,5 @@
 <?php
+// CONCEPT CODE - UNTESTED ROADMAP PROTOTYPE
 // Public Project Blueprint & Concept Roadmap Showcase
 // Linux-First Offline-Resilient NVR & Security Camera System
 header('Content-Type: text/html; charset=utf-8');
@@ -171,10 +172,14 @@ $canonicalUrl = $protocol . '://' . $host . $uri;
           <p class="text-slate-400 text-xs sm:text-sm md:text-base max-w-2xl leading-relaxed">
             Repurposing old smartphones, laptops, USB webcams, Raspberry Pis, routers, and server racks into a resilient, privacy-first NVR mesh network.
           </p>
-          <div class="pt-2">
-            <a href="https://github.com/thepurplefenneckitsune/fennec-cameras" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-200 border border-slate-700 hover:bg-slate-700 hover:text-white hover:border-slate-500 transition shadow-sm">
+          <div class="pt-2 flex flex-wrap items-center gap-2">
+            <a href="camera_preview.php" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-pink-600 via-purple-600 to-indigo-600 text-white shadow-lg hover:opacity-90 transition border border-pink-400/40">
+              <span>🖥️ Open Live NVR Web Display Preview</span>
+              <span class="text-[10px] bg-white/20 px-1.5 py-0.5 rounded uppercase tracking-wider font-extrabold">NEW</span>
+            </a>
+            <a href="https://github.com/thepurplefenneckitsune/fennec-cameras" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-800 text-slate-200 border border-slate-700 hover:bg-slate-700 hover:text-white transition shadow-sm">
               <svg class="w-4 h-4 fill-current text-white shrink-0" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-              <span>GitHub Repository: <strong class="text-indigo-300">thepurplefenneckitsune/fennec-cameras</strong></span>
+              <span>GitHub: <strong class="text-indigo-300">thepurplefenneckitsune/fennec-cameras</strong></span>
             </a>
           </div>
         </div>
@@ -194,6 +199,28 @@ $canonicalUrl = $protocol . '://' . $host . $uri;
             <div class="text-[10px] sm:text-[11px] text-slate-400 uppercase tracking-wider font-semibold mt-0.5">Maintainer</div>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- Development Updates & Notification Drawer -->
+    <div class="bg-[#1e293b] border border-pink-500/40 rounded-2xl p-4 sm:p-5 shadow-lg space-y-2">
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <div class="flex items-center gap-2">
+          <span class="px-2 py-0.5 rounded text-[10px] font-extrabold bg-pink-500/20 text-pink-300 border border-pink-500/30 uppercase tracking-wider">🔔 NOTIFICATIONS & BUILD UPDATES</span>
+          <h3 class="text-xs sm:text-sm font-bold text-white">Active Project Development Log</h3>
+        </div>
+        <a href="camera_preview.php" class="text-xs text-pink-400 hover:text-white font-bold underline flex items-center gap-1">
+          Launch Interactive Preview Display ↗
+        </a>
+      </div>
+      <div class="bg-[#0f172a] border border-[#334155] rounded-xl p-3 text-xs sm:text-sm space-y-1">
+        <div class="flex flex-wrap items-center justify-between text-pink-300 font-bold gap-2">
+          <span>🚀 Update #1: Linux Native Desktop App (PySide6/Qt6) In Active Development</span>
+          <span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded font-extrabold">STATUS: FUNCTIONAL PROTOTYPE</span>
+        </div>
+        <p class="text-slate-300 leading-relaxed text-xs">
+          The native Linux Desktop NVR application GUI (<code class="bg-[#1e293b] px-1.5 py-0.5 rounded text-pink-300">desktop-core/ui/app.py</code>) display is being made! It is <strong>not complete yet, but it is fully functional</strong>. Features include independent multi-monitor pop-out windows, drag-release window auto-grouping with tabbed/sub-grid switcher modes, 2x2/3x3 dynamic camera grid, auto-tour page rotation carousel, focus view with PTZ controls, and zero cloud dependency.
+        </p>
       </div>
     </div>
 

@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fennec Cameras - Linux App Display Preview</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            kitsune: {
+              pink: '#ff007f',
+              purple: '#8a2be2',
+              darkBg: '#0d0714',
+              cardBg: '#1a102a',
+              border: '#371d5a'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #371d5a; border-radius: 4px; }
+  </style>
+</head>
+<body class="bg-[#0d0714] text-[#f8fafc] font-sans antialiased min-h-screen flex flex-col transition-colors duration-200">
+
+  <!-- Top Notification / Announcement Bar -->
+  <div id="noticeBanner" class="bg-gradient-to-r from-purple-900/90 via-pink-900/90 to-purple-900/90 border-b border-pink-500/40 px-4 py-2.5 text-xs text-pink-100 flex flex-wrap items-center justify-between gap-2 shadow-lg">
+    <div class="flex items-center gap-2">
+      <span class="px-2 py-0.5 rounded text-[10px] font-extrabold bg-pink-500 text-white uppercase tracking-wider animate-pulse">ACTIVE DEV UPDATE</span>
+      <span class="font-semibold text-pink-200">📢 <strong>Development Notification:</strong> Linux Desktop native NVR application GUI is actively being made — not complete yet, but fully functional!</span>
+    </div>
+    <div class="flex items-center gap-3">
+      <a href="../public_cam_idea.php" class="text-xs text-pink-300 hover:text-white font-bold underline flex items-center gap-1">
+        ⬅️ Return to Master Roadmap
+      </a>
+      <button onclick="document.getElementById('noticeBanner').style.display='none'" class="text-pink-300 hover:text-white font-bold">✕</button>
+    </div>
+  </div>
+
+  <!-- Top Main Navigation Bar -->
+  <header class="bg-[#1a102a] border-b border-[#371d5a] px-4 py-3 flex flex-wrap items-center justify-between gap-4 shadow-md">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-pink-600 to-purple-600 flex items-center justify-center text-white text-lg font-bold shadow-md shadow-pink-500/20">
+        🦊
+      </div>
+      <div>
+        <h1 class="text-lg font-bold text-white tracking-tight flex items-center gap-2">
+          FENNEC CAMERAS
+          <span class="text-[10px] bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 px-2 py-0.5 rounded-full font-extrabold">100% OFFLINE</span>
+        </h1>
+        <p class="text-xs text-purple-300/80">Linux Camera Linux App Preview Display</p>
+      </div>
+    </div>
+
+    <!-- Toolbar Controls -->
+    <div class="flex flex-wrap items-center gap-2">
+      <button onclick="toggleTheme()" id="btnTheme" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-[#2b1128] text-pink-300 border border-[#831843] hover:bg-[#3b0764] transition">
+        🌙 Dark Kitsune Mode
+      </button>
+
+      <button onclick="openMasterPasscodeModal()" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-[#1a102a] text-purple-300 border border-[#371d5a] hover:bg-purple-900/40 transition">
+        🔑 Master Passcode (PIN: 1234)
+      </button>
+
+      <a href="../public_cam_idea.php" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-gradient-to-r from-pink-600 to-purple-600 text-white shadow-md hover:opacity-90 transition">
+        📋 View Master Blueprint
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Body Split (Sidebar + Workspace Display) -->
+  <div class="flex-1 flex flex-col md:flex-row overflow-hidden">
+    
+    <!-- Sidebar -->
+    <aside class="w-full md:w-64 bg-[#140b22] border-r border-[#371d5a] p-3 space-y-2 shrink-0">
+      <div class="text-[10px] font-extrabold text-purple-400 uppercase tracking-wider px-2 py-1">Dashboard Navigation</div>
+      
+      <button onclick="switchTab('live-grid')" id="nav-live-grid" class="w-full text-left px-3 py-2 rounded-lg text-xs font-bold text-white bg-[#2b1128] border-l-4 border-pink-500 flex items-center justify-between">
+        <span>📺 Live Camera Grid</span>
+        <span class="text-[10px] bg-pink-500 text-white px-1.5 py-0.5 rounded font-bold">9 Cams</span>
+      </button>
+      
+      <button onclick="switchTab('mobile-nodes')" id="nav-mobile-nodes" class="w-full text-left px-3 py-2 rounded-lg text-xs text-purple-300 hover:bg-purple-900/30 flex items-center justify-between">
+        <span>📱 Mobile Nodes</span>
+        <span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-1.5 py-0.5 rounded">3 Active</span>
+      </button>
+
+      <button onclick="switchTab('tiered-storage')" id="nav-tiered-storage" class="w-full text-left px-3 py-2 rounded-lg text-xs text-purple-300 hover:bg-purple-900/30 flex items-center justify-between">
+        <span>💾 Tiered Storage & NAS</span>
+        <span class="text-[10px] bg-blue-500/20 text-blue-400 px-1.5 py-0.5 rounded">1.8 TB NVMe</span>
+      </button>
+
+      <button onclick="switchTab('openwrt-mesh')" id="nav-openwrt-mesh" class="w-full text-left px-3 py-2 rounded-lg text-xs text-purple-300 hover:bg-purple-900/30 flex items-center justify-between">
+        <span>📡 OpenWrt Mesh</span>
+        <span class="text-[10px] bg-purple-500/20 text-purple-300 px-1.5 py-0.5 rounded">WireGuard</span>
+      </button>
+
+      <button onclick="switchTab('edge-ai')" id="nav-edge-ai" class="w-full text-left px-3 py-2 rounded-lg text-xs text-purple-300 hover:bg-purple-900/30 flex items-center justify-between">
+        <span>⚡ Local Edge AI</span>
+        <span class="text-[10px] bg-amber-500/20 text-amber-400 px-1.5 py-0.5 rounded">YOLOv8</span>
+      </button>
+
+      <button onclick="switchTab('system-health')" id="nav-system-health" class="w-full text-left px-3 py-2 rounded-lg text-xs text-purple-300 hover:bg-purple-900/30 flex items-center justify-between">
+        <span>📊 System Health</span>
+        <span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-1.5 py-0.5 rounded">12% CPU</span>
+      </button>
+
+      <!-- Development Updates Log Widget in Sidebar -->
+      <div class="mt-6 pt-4 border-t border-[#371d5a] space-y-2">
+        <div class="text-[10px] font-extrabold text-pink-400 uppercase tracking-wider px-2">🔔 Development Updates Log</div>
+        <div class="bg-[#0a0510] border border-purple-900/60 rounded-xl p-2.5 text-[11px] space-y-1.5">
+          <div class="flex items-center justify-between text-pink-400 font-bold">
+            <span>Linux App Display</span>
+            <span class="text-[9px] text-purple-300">v0.9.4 Prototype</span>
+          </div>
+          <p class="text-slate-300 text-[10px] leading-relaxed">
+            Linux Desktop application display is being made! Not complete yet but it is fully functional with multi-monitor pop-outs, drag release auto-grouping, auto-tour carousel, & focus view.
+          </p>
+          <div class="text-[9px] text-emerald-400 font-bold">✓ 0 Personal Data • Verified Clean Build</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Workspace Content Area -->
+    <main class="flex-1 p-4 md:p-6 overflow-y-auto space-y-4">
+
+      <!-- Page 1: Live Grid Page -->
+      <div id="page-live-grid" class="space-y-4">
+        
+        <!-- Grid Top Control Toolbar -->
+        <div class="bg-[#1a102a] border border-[#371d5a] p-3 rounded-xl flex flex-wrap items-center justify-between gap-3 shadow-md">
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="text-xs font-bold text-white">Grid Layout:</span>
+            <button onclick="setGridMode('2x2')" id="btn-2x2" class="px-3 py-1 rounded-lg text-xs font-bold bg-pink-600 text-white border-2 border-white shadow">
+              ✓ 2x2 (4 Cams)
+            </button>
+            <button onclick="setGridMode('3x3')" id="btn-3x3" class="px-3 py-1 rounded-lg text-xs font-bold bg-[#140b22] text-slate-300 border border-[#371d5a] hover:bg-purple-900/40">
+              3x3 (9 Cams)
+            </button>
+
+            <!-- Pagination Controls -->
+            <div class="flex items-center gap-1.5 ml-2 pl-2 border-l border-[#371d5a]">
+              <button onclick="prevPage()" class="px-2.5 py-1 rounded text-xs font-bold bg-[#140b22] text-pink-300 border border-[#371d5a] hover:bg-purple-900/40">
+                ⬅️ Prev
+              </button>
+              <span id="pageInfo" class="text-xs font-bold text-pink-300 px-1">Page 1/3 (1-4 of 9)</span>
+              <button onclick="nextPage()" class="px-2.5 py-1 rounded text-xs font-bold bg-[#140b22] text-pink-300 border border-[#371d5a] hover:bg-purple-900/40">
+                Next ➡️
+              </button>
+            </div>
+
+            <!-- Auto-Tour Timer Carousel Switcher -->
+            <button onclick="cycleAutoTour()" id="btnAutoTour" class="px-3 py-1 rounded-lg text-xs font-bold bg-[#140b22] text-slate-300 border border-[#371d5a] hover:bg-purple-900/40">
+              🔄 Auto-Tour: OFF
+            </button>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2">
+            <button onclick="toggleGlobalPrivacy()" id="btnGlobalPrivacy" class="px-3 py-1 rounded-lg text-xs font-bold bg-[#140b22] text-emerald-400 border border-emerald-500/40 hover:bg-emerald-900/30">
+              🛡️ Global Privacy: OFF
+            </button>
+
+            <button onclick="triggerEmergencySiren()" class="px-3 py-1 rounded-lg text-xs font-bold bg-rose-950 text-rose-300 border border-rose-600 hover:bg-rose-900">
+              🚨 Emergency Siren
+            </button>
+
+            <button onclick="snapshotAllVisible()" class="px-3 py-1 rounded-lg text-xs font-bold bg-[#140b22] text-white border border-[#371d5a] hover:bg-purple-900/40">
+              📸 Snapshot All
+            </button>
+          </div>
+        </div>
+
+        <!-- Dynamic Camera Stream Grid Container -->
+        <div id="cameraGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Populated by JavaScript -->
+        </div>
+
+      </div>
+
+      <!-- Page 2: Expanded Single Focus View -->
+      <div id="page-expanded-view" class="hidden space-y-4">
+        <div class="flex items-center justify-between bg-[#1a102a] border border-[#371d5a] p-3 rounded-xl">
+          <div class="flex items-center gap-3">
+            <button onclick="switchTab('live-grid')" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-[#140b22] text-pink-300 border border-[#371d5a]">
+              ⬅️ Back to Camera Grid
+            </button>
+            <h2 id="expCamTitle" class="text-sm md:text-base font-bold text-white">🔍 Focus View: Front Yard Camera (cam-01)</h2>
+          </div>
+          <button onclick="popoutCurrentExpanded()" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-purple-900 text-pink-300 border border-pink-500/40">
+            🗗 Pop Out Window
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
+          <!-- Main Large Viewfinder -->
+          <div class="lg:col-span-3 bg-[#040207] border-2 border-[#201235] rounded-2xl p-6 flex flex-col items-center justify-center min-h-[380px] relative">
+            <div class="absolute top-4 left-4 flex gap-2">
+              <span class="bg-rose-600/80 text-white px-2.5 py-1 rounded text-xs font-bold">🔴 LIVE REC • H.265</span>
+              <span class="bg-emerald-600/80 text-white px-2.5 py-1 rounded text-xs font-bold">⚡ YOLOv8: Person Detected (94%)</span>
+            </div>
+            <div class="text-6xl mb-3">📹</div>
+            <div id="expCanvasDetails" class="text-center text-xs text-slate-400 leading-relaxed font-mono">
+              [ Live Stream • 1080p (1920x1080) • 30FPS ]<br>v4l2:///dev/video0
+            </div>
+          </div>
+
+          <!-- Right Hardware PTZ Controls -->
+          <div class="bg-[#1a102a] border border-[#371d5a] p-4 rounded-2xl space-y-4">
+            <h3 class="text-xs font-bold text-pink-300 uppercase tracking-wider">🕹️ PTZ Pan-Tilt Controls</h3>
+            <div class="grid grid-cols-3 gap-2 max-w-[180px] mx-auto text-center">
+              <div></div>
+              <button onclick="triggerPtzAction('Tilt Up (▲)')" class="bg-[#140b22] text-white p-2 rounded-lg font-bold border border-[#371d5a] hover:bg-pink-600">▲</button>
+              <div></div>
+              <button onclick="triggerPtzAction('Pan Left (◀)')" class="bg-[#140b22] text-white p-2 rounded-lg font-bold border border-[#371d5a] hover:bg-pink-600">◀</button>
+              <button onclick="triggerPtzAction('Return to Home')" class="bg-purple-600 text-white p-2 rounded-lg font-bold hover:bg-pink-600">🏠</button>
+              <button onclick="triggerPtzAction('Pan Right (▶)')" class="bg-[#140b22] text-white p-2 rounded-lg font-bold border border-[#371d5a] hover:bg-pink-600">▶</button>
+              <div></div>
+              <button onclick="triggerPtzAction('Tilt Down (▼)')" class="bg-[#140b22] text-white p-2 rounded-lg font-bold border border-[#371d5a] hover:bg-pink-600">▼</button>
+              <div></div>
+            </div>
+
+            <div class="pt-2 border-t border-[#371d5a] space-y-2">
+              <div class="text-xs font-bold text-purple-300">🎙️ Audio & Intercom</div>
+              <button onclick="triggerPtzAction('Hold to Talk Intercom')" class="w-full py-2 bg-gradient-to-r from-pink-600 to-purple-600 text-white text-xs font-bold rounded-lg shadow">
+                🎙️ HOLD TO TALK (Intercom)
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Other Pages Placeholder -->
+      <div id="page-other" class="hidden bg-[#1a102a] border border-[#371d5a] p-6 rounded-2xl text-center space-y-3">
+        <div class="text-4xl">⚙️</div>
+        <h2 id="otherPageTitle" class="text-lg font-bold text-white">Module Display</h2>
+        <p class="text-xs text-slate-400">All setting modules are fully functional in the native Linux Desktop app build.</p>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Pop-Out Window Container Overlay -->
+  <div id="popoutOverlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+    <div class="bg-[#1a102a] border-2 border-pink-500 rounded-2xl w-full max-w-3xl p-5 space-y-4 shadow-2xl relative">
+      <div class="flex items-center justify-between border-b border-[#371d5a] pb-3">
+        <h3 id="popoutTitle" class="text-sm font-bold text-pink-400">🗗 Independent Pop-Out Workspace</h3>
+        <div class="flex items-center gap-2">
+          <button onclick="setPopoutViewMode('grid')" class="px-2.5 py-1 text-xs font-bold bg-pink-600 text-white rounded">🗂️ Sub-Grid View</button>
+          <button onclick="setPopoutViewMode('tabbed')" class="px-2.5 py-1 text-xs font-bold bg-[#140b22] text-slate-300 border border-[#371d5a] rounded">📑 Tabbed View</button>
+          <button onclick="closePopoutOverlay()" class="text-slate-400 hover:text-white font-bold ml-2">✕</button>
+        </div>
+      </div>
+
+      <div id="popoutBody" class="bg-[#040207] border border-[#371d5a] rounded-xl p-4 min-h-[260px] flex flex-col items-center justify-center">
+        <!-- Dynamic Popout Content -->
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript Logic -->
+  <script>
+    const DEV_CAMERAS = {
+      "cam-01": { id: "cam-01", name: "Front Yard Camera", type: "V4L2 USB Webcam", resolution: "1080p (1920x1080)", fps: 30, rtsp: "v4l2:///dev/video0" },
+      "cam-02": { id: "cam-02", name: "Driveway Node", type: "Android Phone S24", resolution: "4K (3840x2160)", fps: 24, rtsp: "rtsp://192.168.1.105:8554/live" },
+      "cam-03": { id: "cam-03", name: "Garage Gate", type: "ONVIF / RTSP IP", resolution: "1080p (1920x1080)", fps: 30, rtsp: "rtsp://admin:7712@192.168.1.120:554/stream1" },
+      "cam-04": { id: "cam-04", name: "Porch 360° View", type: "Dual-Lens Panoramic", resolution: "2K Panoramic", fps: 30, rtsp: "rtsp://192.168.1.135:8554/pano" },
+      "cam-05": { id: "cam-05", name: "Backyard Node", type: "Pixel 7 Pro Node", resolution: "1080p (1920x1080)", fps: 30, rtsp: "rtsp://192.168.1.112:8554/live" },
+      "cam-06": { id: "cam-06", name: "Hallway Backup", type: "iPhone 11 Node", resolution: "1080p (1920x1080)", fps: 30, rtsp: "rtsp://192.168.1.140:8554/live" },
+      "cam-07": { id: "cam-07", name: "Side Alley Cam", type: "ONVIF / RTSP IP", resolution: "1080p (1920x1080)", fps: 30, rtsp: "rtsp://admin:7743@192.168.1.145:554/stream1" },
+      "cam-08": { id: "cam-08", name: "Attic Sensor Cam", type: "V4L2 USB Webcam", resolution: "720p (1280x720)", fps: 30, rtsp: "v4l2:///dev/video1" },
+      "cam-09": { id: "cam-09", name: "Basement Perimeter", type: "Dual-Lens Panoramic", resolution: "2K Panoramic", fps: 30, rtsp: "rtsp://192.168.1.155:8554/pano" }
+    };
+
+    let activeGridMode = "2x2";
+    let currentPage = 0;
+    let autoTourSeconds = 0;
+    let autoTourTimer = null;
+
+    function renderGrid() {
+      const container = document.getElementById('cameraGrid');
+      container.innerHTML = '';
+      
+      const keys = Object.keys(DEV_CAMERAS);
+      const pageSize = activeGridMode === "2x2" ? 4 : 9;
+      const totalPages = Math.ceil(keys.length / pageSize);
+      
+      if (currentPage >= totalPages) currentPage = 0;
+      
+      const startIdx = currentPage * pageSize;
+      const visibleKeys = keys.slice(startIdx, startIdx + pageSize);
+
+      container.className = activeGridMode === "2x2" ? "grid grid-cols-1 md:grid-cols-2 gap-4" : "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3";
+
+      visibleKeys.forEach(cid => {
+        const cam = DEV_CAMERAS[cid];
+        const card = document.createElement('div');
+        card.className = "bg-[#1a102a] border border-[#371d5a] rounded-xl p-3 flex flex-col justify-between space-y-3 hover:border-pink-500 transition shadow";
+        card.innerHTML = `
+          <div class="flex items-center justify-between text-xs font-bold">
+            <span class="text-white">${cam.name}</span>
+            <span class="text-[10px] bg-emerald-950 text-emerald-400 border border-emerald-600 px-1.5 py-0.5 rounded">${cam.type}</span>
+          </div>
+          <div class="bg-[#040207] border border-[#201235] rounded-lg p-4 text-center flex flex-col items-center justify-center min-h-[140px]">
+            <div class="text-3xl mb-1">📹</div>
+            <div class="text-[10px] text-slate-400 font-mono">[ ${cam.resolution} • ${cam.fps}FPS ]<br>${cam.rtsp}</div>
+          </div>
+          <div class="flex items-center justify-between text-[11px]">
+            <span class="text-rose-500 font-bold">🔴 REC</span>
+            <div class="flex gap-1.5">
+              <button onclick="openPopout('${cam.id}')" class="px-2 py-0.5 rounded bg-purple-900 text-pink-300 border border-pink-500/30 hover:bg-pink-600 hover:text-white font-bold">🗗 Pop Out</button>
+              <button onclick="openFocus('${cam.id}')" class="px-2 py-0.5 rounded bg-purple-600 text-white font-bold hover:bg-pink-600">🔍 Focus</button>
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+
+      document.getElementById('pageInfo').innerText = `Page ${currentPage + 1}/${totalPages} (${startIdx + 1}-${startIdx + visibleKeys.length} of ${keys.length})`;
+    }
+
+    function setGridMode(mode) {
+      activeGridMode = mode;
+      currentPage = 0;
+      document.getElementById('btn-2x2').className = mode === '2x2' ? "px-3 py-1 rounded-lg text-xs font-bold bg-pink-600 text-white border-2 border-white shadow" : "px-3 py-1 rounded-lg text-xs font-bold bg-[#140b22] text-slate-300 border border-[#371d5a] hover:bg-purple-900/40";
+      document.getElementById('btn-3x3').className = mode === '3x3' ? "px-3 py-1 rounded-lg text-xs font-bold bg-pink-600 text-white border-2 border-white shadow" : "px-3 py-1 rounded-lg text-xs font-bold bg-[#140b22] text-slate-300 border border-[#371d5a] hover:bg-purple-900/40";
+      renderGrid();
+    }
+
+    function prevPage() {
+      const pageSize = activeGridMode === "2x2" ? 4 : 9;
+      const totalPages = Math.ceil(Object.keys(DEV_CAMERAS).length / pageSize);
+      currentPage = (currentPage - 1 + totalPages) % totalPages;
+      renderGrid();
+    }
+
+    function nextPage() {
+      const pageSize = activeGridMode === "2x2" ? 4 : 9;
+      const totalPages = Math.ceil(Object.keys(DEV_CAMERAS).length / pageSize);
+      currentPage = (currentPage + 1) % totalPages;
+      renderGrid();
+    }
+
+    function cycleAutoTour() {
+      const intervals = [0, 5, 10, 30];
+      const idx = (intervals.indexOf(autoTourSeconds) + 1) % intervals.length;
+      autoTourSeconds = intervals[idx];
+
+      if (autoTourTimer) clearInterval(autoTourTimer);
+
+      const btn = document.getElementById('btnAutoTour');
+      if (autoTourSeconds === 0) {
+        btn.innerText = "🔄 Auto-Tour: OFF";
+        btn.className = "px-3 py-1 rounded-lg text-xs font-bold bg-[#140b22] text-slate-300 border border-[#371d5a]";
+      } else {
+        btn.innerText = `🟢 AUTO-TOUR: ${autoTourSeconds}s`;
+        btn.className = "px-3 py-1 rounded-lg text-xs font-bold bg-emerald-950 text-emerald-400 border border-emerald-500 shadow animate-pulse";
+        autoTourTimer = setInterval(nextPage, autoTourSeconds * 1000);
+      }
+    }
+
+    function openFocus(cid) {
+      const cam = DEV_CAMERAS[cid];
+      document.getElementById('expCamTitle').innerText = `🔍 Focus View: ${cam.name} (${cam.id})`;
+      document.getElementById('expCanvasDetails').innerHTML = `[ Live Stream • ${cam.resolution} • ${cam.fps}FPS ]<br>${cam.rtsp}`;
+      switchTab('expanded-view');
+    }
+
+    function openPopout(cid) {
+      const cam = DEV_CAMERAS[cid];
+      document.getElementById('popoutTitle').innerText = `🗗 Pop-Out Workspace: ${cam.name}`;
+      document.getElementById('popoutBody').innerHTML = `
+        <div class="text-5xl mb-2">📹</div>
+        <div class="text-xs text-pink-300 font-bold mb-1">${cam.name} (${cam.id})</div>
+        <div class="text-[10px] text-slate-400 font-mono mb-4">[ Live Stream • ${cam.resolution} • ${cam.fps}FPS ]<br>${cam.rtsp}</div>
+        <div class="text-[11px] text-emerald-400 bg-emerald-950/80 border border-emerald-500/40 px-3 py-1 rounded-lg font-bold">
+          ⚡ Multi-Monitor Window Detached & Positionable
+        </div>
+      `;
+      document.getElementById('popoutOverlay').style.display = 'flex';
+    }
+
+    function closePopoutOverlay() {
+      document.getElementById('popoutOverlay').style.display = 'none';
+    }
+
+    function switchTab(tabId) {
+      ['live-grid', 'expanded-view', 'other'].forEach(id => {
+        document.getElementById(`page-${id}`)?.classList.add('hidden');
+      });
+
+      if (tabId === 'live-grid') {
+        document.getElementById('page-live-grid').classList.remove('hidden');
+      } else if (tabId === 'expanded-view') {
+        document.getElementById('page-expanded-view').classList.remove('hidden');
+      } else {
+        document.getElementById('page-other').classList.remove('hidden');
+      }
+    }
+
+    function toggleTheme() {
+      alert("Theme toggle active. Native Linux App boots in Dark Kitsune mode by default and supports High-Contrast Natural Light Mode.");
+    }
+
+    function openMasterPasscodeModal() {
+      alert("🔑 Master System Passcode PIN: '1234'. Node security access authorized.");
+    }
+
+    function triggerPtzAction(action) {
+      alert(`⚡ Control Active: ${action}`);
+    }
+
+    function snapshotAllVisible() {
+      alert("📸 Snapshots captured for all visible camera tiles on screen!");
+    }
+
+    function toggleGlobalPrivacy() {
+      const btn = document.getElementById('btnGlobalPrivacy');
+      if (btn.innerText.includes("OFF")) {
+        btn.innerText = "🛡️ Global Privacy: ACTIVE";
+        btn.className = "px-3 py-1 rounded-lg text-xs font-bold bg-rose-900 text-white border border-rose-500";
+      } else {
+        btn.innerText = "🛡️ Global Privacy: OFF";
+        btn.className = "px-3 py-1 rounded-lg text-xs font-bold bg-[#140b22] text-emerald-400 border border-emerald-500/40";
+      }
+    }
+
+    renderGrid();
+  </script>
+</body>
+</html>
