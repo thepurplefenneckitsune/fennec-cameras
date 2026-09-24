@@ -313,6 +313,7 @@ class CameraFeedWidget(QFrame):
         self.video_box = QLabel()
         self.video_box.setAlignment(Qt.AlignCenter)
         self.video_box.setMinimumHeight(180)
+        self.video_box.setScaledContents(True)  # FORCE EXPAND TO FILL CONTAINER 100%
         self.video_box.setStyleSheet("background-color: #040207; border: 1px solid #201235; border-radius: 6px; color: #00ffcc;")
         self.video_box.setText("Connecting to Camera Stream...")
         layout.addWidget(self.video_box, 1)
@@ -336,7 +337,7 @@ class CameraFeedWidget(QFrame):
         ip_path = self.cam_data.get('ip', '')
         # Check if device is a local V4L2 webcam node (/dev/video*)
         if ip_path.startswith('/dev/video') and os.path.exists(ip_path):
-            self.capture_thread = V4L2CameraCaptureThread(device_path=ip_path, width=320, height=180)
+            self.capture_thread = V4L2CameraCaptureThread(device_path=ip_path, width=640, height=360)
             self.capture_thread.frame_received.connect(self.update_video_frame)
             self.capture_thread.start()
         else:
@@ -347,8 +348,9 @@ class CameraFeedWidget(QFrame):
 
     @Slot(QImage)
     def update_video_frame(self, qimg):
+        # Force video to expand and fill container 100%
         pixmap = QPixmap.fromImage(qimg)
-        self.video_box.setPixmap(pixmap.scaled(self.video_box.size(), Qt.KeepAspectRatio, Qt.SmoothTransformation))
+        self.video_box.setPixmap(pixmap)
 
     def update_synthetic_frame(self):
         # Render clean animated camera stream with timestamp
