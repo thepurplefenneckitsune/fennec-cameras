@@ -17,12 +17,42 @@
 
   <div class="max-w-6xl mx-auto space-y-6">
     <div class="bg-[#1e293b] border border-[#334155] rounded-2xl p-6 shadow-xl">
-      <h1 class="text-3xl font-extrabold text-white mb-2">Linux-First Offline Security Camera Hub</h1>
-      <p class="text-slate-400 text-sm max-w-2xl leading-relaxed">
-        100% open-source, privacy-first offline NVR and security camera mesh system. Repurposing old Android smartphones, laptops, USB webcams, Raspberry Pis, and OpenWrt routers into a zero-cloud home security network.
-      </p>
-      <div class="mt-4 inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
-        Zero PHP Dependency • Static HTML5 • Instant Startup
+      <div class="flex items-start justify-between gap-4">
+        <div>
+          <h1 class="text-3xl font-extrabold text-white mb-2">Linux-First Offline Security Camera Hub</h1>
+          <p class="text-slate-400 text-sm max-w-2xl leading-relaxed">
+            100% open-source, privacy-first offline NVR and security camera mesh system. Repurposing old Android smartphones, laptops, USB webcams, Raspberry Pis, and OpenWrt routers into a zero-cloud home security network.
+          </p>
+          <div class="mt-4 inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+            Zero PHP Dependency • Static HTML5 • Instant Startup
+          </div>
+        </div>
+
+        <!-- Notification Bell + Update History Dropdown -->
+        <div class="relative shrink-0" id="updateBellWrap">
+          <button id="updateBellBtn" aria-label="Update history" aria-haspopup="true" aria-expanded="false"
+            class="relative flex items-center justify-center w-11 h-11 rounded-xl bg-[#0f172a] border border-[#334155] text-slate-300 hover:text-white hover:border-indigo-500/50 hover:bg-[#1e293b] transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+            </svg>
+            <span id="updateBellDot" class="absolute top-2 right-2 w-2.5 h-2.5 rounded-full bg-pink-500 animate-pulse"></span>
+          </button>
+
+          <!-- Dropdown Panel -->
+          <div id="updateHistoryPanel" class="hidden absolute right-0 mt-2 w-80 max-w-[calc(100vw-3rem)] bg-[#0f172a] border border-[#334155] rounded-xl shadow-2xl overflow-hidden z-50">
+            <div class="flex items-center justify-between px-4 py-3 border-b border-[#334155] bg-[#1e293b]">
+              <span class="text-xs font-extrabold text-white uppercase tracking-wider">🔔 Update History</span>
+              <span id="updateCountBadge" class="text-[10px] font-bold bg-pink-500/20 text-pink-400 px-2 py-0.5 rounded-full"></span>
+            </div>
+            <div id="updateHistoryList" class="max-h-80 overflow-y-auto divide-y divide-[#1e293b]"></div>
+            <div class="px-4 py-2.5 border-t border-[#334155] bg-[#1e293b]">
+              <a href="https://github.com/thepurplefenneckitsune/fennec-cameras/commits/main" target="_blank" rel="noopener"
+                class="text-[11px] font-bold text-indigo-400 hover:text-indigo-300 transition-colors">
+                View full git history →
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -30,6 +60,106 @@
   <script>
     // CONCEPT CODE - UNTESTED ROADMAP PROTOTYPE
     console.log('Fennec Public Showcase loaded (Zero PHP dependency static HTML).');
+
+    // ==========================================
+    // Update History Notification Bell
+    // ==========================================
+    (function () {
+      // Hardcoded changelog entries (newest first)
+      var UPDATE_HISTORY = [
+        {
+          version: 'v0.9.4',
+          date: '2026-09-24',
+          tag: 'fix',
+          title: 'Restored production desktop app',
+          body: 'Recovered desktop-core/ui/app.py after an accidental overwrite with the test-bench prototype. Public front-end untouched.'
+        },
+        {
+          version: 'v0.9.3',
+          date: '2026-09-23',
+          tag: 'feat',
+          title: 'Zero-dependency static showcase',
+          body: 'Added 100% static HTML5 public pages for instant startup with no PHP runtime required.'
+        },
+        {
+          version: 'v0.9.2',
+          date: '2026-09-22',
+          tag: 'feat',
+          title: 'OpenWrt mesh packages',
+          body: 'Added WireGuard mesh setup and QoS tuning scripts for repurposed OpenWrt routers.'
+        },
+        {
+          version: 'v0.9.1',
+          date: '2026-09-21',
+          tag: 'feat',
+          title: 'Home Assistant MQTT auto-discovery',
+          body: 'Zero-dependency MQTT auto-discovery and sensor webhook concept modules added.'
+        },
+        {
+          version: 'v0.9.0',
+          date: '2026-09-20',
+          tag: 'feat',
+          title: 'Native Linux desktop NVR GUI',
+          body: 'Initial PySide6 desktop application with multi-monitor pop-outs, camera grouping, and auto-tour carousel.'
+        }
+      ];
+
+      var TAG_STYLES = {
+        fix: 'bg-amber-500/20 text-amber-400',
+        feat: 'bg-emerald-500/20 text-emerald-400',
+        chore: 'bg-slate-500/20 text-slate-400',
+        docs: 'bg-indigo-500/20 text-indigo-400'
+      };
+
+      var bellBtn = document.getElementById('updateBellBtn');
+      var panel = document.getElementById('updateHistoryPanel');
+      var list = document.getElementById('updateHistoryList');
+      var dot = document.getElementById('updateBellDot');
+      var badge = document.getElementById('updateCountBadge');
+
+      // Render entries
+      UPDATE_HISTORY.forEach(function (entry) {
+        var item = document.createElement('div');
+        item.className = 'px-4 py-3 hover:bg-[#1e293b] transition-colors';
+        var tagClass = TAG_STYLES[entry.tag] || TAG_STYLES.chore;
+        item.innerHTML =
+          '<div class="flex items-center justify-between mb-1">' +
+            '<span class="text-[10px] font-extrabold text-white uppercase tracking-wider">' + entry.version + '</span>' +
+            '<span class="text-[10px] font-bold ' + tagClass + ' px-1.5 py-0.5 rounded">' + entry.tag + '</span>' +
+          '</div>' +
+          '<div class="text-xs font-bold text-slate-200 mb-0.5">' + entry.title + '</div>' +
+          '<div class="text-[11px] text-slate-400 leading-relaxed">' + entry.body + '</div>' +
+          '<div class="text-[10px] text-slate-500 mt-1">' + entry.date + '</div>';
+        list.appendChild(item);
+      });
+
+      badge.textContent = UPDATE_HISTORY.length + ' updates';
+
+      // Toggle dropdown
+      function toggle(open) {
+        var willOpen = open !== undefined ? open : panel.classList.contains('hidden');
+        panel.classList.toggle('hidden', !willOpen);
+        bellBtn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+        if (willOpen) dot.classList.add('hidden');
+      }
+
+      bellBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        toggle();
+      });
+
+      // Close on outside click
+      document.addEventListener('click', function (e) {
+        if (!document.getElementById('updateBellWrap').contains(e.target)) {
+          toggle(false);
+        }
+      });
+
+      // Close on Escape
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') toggle(false);
+      });
+    })();
   </script>
 </body>
 </html>
