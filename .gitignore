@@ -38,4 +38,6 @@ __pycache__/
 # Ignore external review & incoming contribution folders (push deny list)
 external_contributions/
 community_reviews/
+test_bench_build/
+
 
